@@ -3,105 +3,150 @@
     "id": "bruh",
     "label": "Bruh",
     "file": "sounds/bruh.mp3",
-    "category": "meme",
-    "color": "#fb4934"
+    "category": "meme"
   },
   {
     "id": "vine-boom",
     "label": "Vine Boom",
     "file": "sounds/vine-boom.mp3",
-    "category": "sfx",
-    "color": "#b16286"
-  },
-  {
-    "id": "rizz",
-    "label": "Rizz",
-    "file": "sounds/rizz.mp3",
-    "category": "meme",
-    "color": "#fe8019"
+    "category": "sfx"
   },
   {
     "id": "oof",
     "label": "Oof",
     "file": "sounds/oof.mp3",
-    "category": "meme",
-    "color": "#fabd2f"
+    "category": "meme"
   },
   {
     "id": "rimshot",
     "label": "Rimshot",
     "file": "sounds/rimshot.mp3",
-    "category": "sfx",
-    "color": "#8ec07c"
+    "category": "sfx"
   },
   {
     "id": "sad-trombone",
     "label": "Sad Trombone",
     "file": "sounds/sad-trombone.mp3",
-    "category": "sfx",
-    "color": "#83a598"
-  },
-  {
-    "id": "among-us",
-    "label": "Among Us",
-    "file": "sounds/among-us.mp3",
-    "category": "meme",
-    "color": "#d3869b"
+    "category": "sfx"
   },
   {
     "id": "emotional-damage",
     "label": "Emotional Damage",
     "file": "sounds/emotional-damage.mp3",
-    "category": "meme",
-    "color": "#cc241d"
+    "category": "meme"
   },
   {
     "id": "dun-dun-dun",
     "label": "Dun Dun Dun",
     "file": "sounds/dun-dun-dun.mp3",
-    "category": "sfx",
-    "color": "#458588"
-  },
-  {
-    "id": "wow",
-    "label": "Wow",
-    "file": "sounds/wow.mp3",
-    "category": "meme",
-    "color": "#b8bb26"
+    "category": "sfx"
   },
   {
     "id": "cricket",
     "label": "Grillos",
     "file": "sounds/cricket.mp3",
-    "category": "sfx",
-    "color": "#689d6a"
-  },
-  {
-    "id": "goofy-ahh",
-    "label": "Goofy Ahh",
-    "file": "sounds/goofy-ahh.mp3",
-    "category": "meme",
-    "color": "#d79921"
+    "category": "sfx"
   },
   {
     "id": "metal-pipe",
     "label": "Metal Pipe",
     "file": "sounds/metal-pipe.mp3",
-    "category": "sfx",
-    "color": "#a89984"
+    "category": "sfx"
   },
   {
     "id": "noo",
     "label": "Nooo!",
     "file": "sounds/noo.mp3",
-    "category": "meme",
-    "color": "#d65d0e"
+    "category": "meme"
   },
   {
     "id": "airhorn",
     "label": "Airhorn",
     "file": "sounds/airhorn.mp3",
-    "category": "sfx",
-    "color": "#98971a"
+    "category": "sfx"
+  },
+  {
+    "id": "oh-my-god",
+    "label": "Oh My God",
+    "file": "sounds/oh-my-god.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "wow",
+    "label": "Wow",
+    "file": "sounds/wow.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "el-diablo",
+    "label": "El Diablo",
+    "file": "sounds/el-diablo.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "fuira-bicho",
+    "label": "Fuira Bicho",
+    "file": "sounds/fuira-bicho.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "cronica",
+    "label": "Cronica",
+    "file": "sounds/cronica.mp3",
+    "category": "sfx"
+  },
+  {
+    "id": "iupi",
+    "label": "Iupi",
+    "file": "sounds/iupi.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "mercadopago",
+    "label": "MercadoPago",
+    "file": "sounds/mercadopago.mp3",
+    "category": "sfx"
+  },
+  {
+    "id": "hawai",
+    "label": "Hawai",
+    "file": "sounds/hawai.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "spiderman",
+    "label": "Spiderman",
+    "file": "sounds/spiderman.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "violin-triste",
+    "label": "Violin Triste",
+    "file": "sounds/violin-triste.mp3",
+    "category": "sfx"
+  },
+  {
+    "id": "no-hay-plata",
+    "label": "No Hay Plata",
+    "file": "sounds/no-hay-plata.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "marcha-peronista",
+    "label": "Marcha Peronista",
+    "file": "sounds/marcha-peronista.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "risa",
+    "label": "Risa",
+    "file": "sounds/risa.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "dificil",
+    "label": "Dificil",
+    "file": "sounds/dificil.mp3",
+    "category": "meme"
   }
 ]
