@@ -1,0 +1,349 @@
+/* === Paleta e-ink / minimalista === */
+:root {
+  --bg: #F5F1EB;
+  --bg-raised: #EDE9E3;
+  --bg-pressed: #E4E0D9;
+  --border: #D6D1C9;
+  --text: #2D2A26;
+  --text-secondary: #9C9690;
+  --text-on-btn: #2D2A26;
+  --accent: #fe8019;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --initial-opacity: 0.25;
+  --radius: 10px;
+  --gap: 8px;
+}
+
+[data-theme="dark"] {
+  --bg: #282828;
+  --bg-raised: #3c3836;
+  --bg-pressed: #504945;
+  --border: #665c54;
+  --text: #ebdbb2;
+  --text-secondary: #a89984;
+  --text-on-btn: #ebdbb2;
+  --accent: #fe8019;
+  --initial-opacity: 0.35;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* === Reset === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Base === */
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* === Header === */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.header-row h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* === Botón de tema === */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:active {
+  background: var(--bg-pressed);
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+:root:not([data-theme="dark"]) .theme-toggle .icon-moon,
+[data-theme="light"] .theme-toggle .icon-moon {
+  display: block;
+}
+
+/* === Fila de búsqueda === */
+.search-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 0;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+/* === Botón de layout === */
+.layout-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.layout-toggle:active {
+  background: var(--bg-pressed);
+}
+
+.icon-layout {
+  display: none;
+}
+
+.icon-layout.active {
+  display: block;
+}
+
+.filter-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-toggle.active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.filter-toggle:active {
+  background: var(--bg-pressed);
+}
+
+.filter-popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 130px;
+  padding: 6px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+}
+
+[data-theme="dark"] .filter-popup {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.filter-popup[hidden] {
+  display: none;
+}
+
+.search-bar svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.search-bar input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* === Filtros === */
+.filter-btn {
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+
+.filter-btn:active {
+  background: var(--bg-pressed);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* === Grilla === */
+.grid {
+  display: grid;
+  gap: var(--gap);
+  padding: 12px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 16px));
+}
+
+@media (min-width: 768px) {
+  .grid {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+}
+
+/* Modos de layout */
+.grid.layout-grid      { grid-template-columns: repeat(2, 1fr); }
+.grid.layout-grid-sm   { grid-template-columns: repeat(3, 1fr); }
+.grid.layout-list       { grid-template-columns: 1fr; }
+
+/* === Botón de sonido (base) === */
+.sound-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-on-btn);
+  background: var(--bg-raised);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  word-break: break-word;
+  line-height: 1.25;
+  box-shadow: var(--shadow);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+}
+
+/* Aspecto cuadrado solo en modos grilla */
+.layout-grid .sound-btn,
+.layout-grid-sm .sound-btn {
+  aspect-ratio: 1;
+}
+
+/* Modo lista */
+.layout-list .sound-btn {
+  padding: 14px 16px;
+  justify-content: flex-start;
+  font-size: 0.95rem;
+}
+
+/* Inicial decorativa */
+.sound-btn::before {
+  content: attr(data-initial);
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--initial-color);
+  opacity: var(--initial-opacity);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+/* Inicial más chica en grilla chica */
+.layout-grid-sm .sound-btn::before {
+  font-size: 2rem;
+  top: 2px;
+  left: 4px;
+}
+
+/* Inicial en lista: a la derecha, centrada vertical */
+.layout-list .sound-btn::before {
+  top: 50%;
+  left: auto;
+  right: 12px;
+  transform: translateY(-50%);
+  font-size: 2.2rem;
+}
+
+.sound-btn:active,
+.sound-btn.playing {
+  transform: scale(0.97);
+  background: color-mix(in srgb, var(--initial-color) 10%, var(--bg-raised));
+  border-color: var(--initial-color);
+}
+
+/* === Estado vacío === */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

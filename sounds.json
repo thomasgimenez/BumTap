@@ -1,0 +1,107 @@
+[
+  {
+    "id": "bruh",
+    "label": "Bruh",
+    "file": "sounds/bruh.mp3",
+    "category": "meme",
+    "color": "#fb4934"
+  },
+  {
+    "id": "vine-boom",
+    "label": "Vine Boom",
+    "file": "sounds/vine-boom.mp3",
+    "category": "sfx",
+    "color": "#b16286"
+  },
+  {
+    "id": "rizz",
+    "label": "Rizz",
+    "file": "sounds/rizz.mp3",
+    "category": "meme",
+    "color": "#fe8019"
+  },
+  {
+    "id": "oof",
+    "label": "Oof",
+    "file": "sounds/oof.mp3",
+    "category": "meme",
+    "color": "#fabd2f"
+  },
+  {
+    "id": "rimshot",
+    "label": "Rimshot",
+    "file": "sounds/rimshot.mp3",
+    "category": "sfx",
+    "color": "#8ec07c"
+  },
+  {
+    "id": "sad-trombone",
+    "label": "Sad Trombone",
+    "file": "sounds/sad-trombone.mp3",
+    "category": "sfx",
+    "color": "#83a598"
+  },
+  {
+    "id": "among-us",
+    "label": "Among Us",
+    "file": "sounds/among-us.mp3",
+    "category": "meme",
+    "color": "#d3869b"
+  },
+  {
+    "id": "emotional-damage",
+    "label": "Emotional Damage",
+    "file": "sounds/emotional-damage.mp3",
+    "category": "meme",
+    "color": "#cc241d"
+  },
+  {
+    "id": "dun-dun-dun",
+    "label": "Dun Dun Dun",
+    "file": "sounds/dun-dun-dun.mp3",
+    "category": "sfx",
+    "color": "#458588"
+  },
+  {
+    "id": "wow",
+    "label": "Wow",
+    "file": "sounds/wow.mp3",
+    "category": "meme",
+    "color": "#b8bb26"
+  },
+  {
+    "id": "cricket",
+    "label": "Grillos",
+    "file": "sounds/cricket.mp3",
+    "category": "sfx",
+    "color": "#689d6a"
+  },
+  {
+    "id": "goofy-ahh",
+    "label": "Goofy Ahh",
+    "file": "sounds/goofy-ahh.mp3",
+    "category": "meme",
+    "color": "#d79921"
+  },
+  {
+    "id": "metal-pipe",
+    "label": "Metal Pipe",
+    "file": "sounds/metal-pipe.mp3",
+    "category": "sfx",
+    "color": "#a89984"
+  },
+  {
+    "id": "noo",
+    "label": "Nooo!",
+    "file": "sounds/noo.mp3",
+    "category": "meme",
+    "color": "#d65d0e"
+  },
+  {
+    "id": "airhorn",
+    "label": "Airhorn",
+    "file": "sounds/airhorn.mp3",
+    "category": "sfx",
+    "color": "#98971a"
+  }
+]
