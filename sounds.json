@@ -148,5 +148,29 @@
     "label": "Dificil",
     "file": "sounds/dificil.mp3",
     "category": "meme"
+  },
+  {
+    "id": "atiendo-boludos",
+    "label": "Atiendo Boludos",
+    "file": "sounds/atiendo-boludos.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "noooo-seas-ma",
+    "label": "Nooo Seasma",
+    "file": "sounds/noooo-seas-ma.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "ponele-voluntad",
+    "label": "Ponele Voluntad",
+    "file": "sounds/ponele-voluntad.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "dejate-reventar",
+    "label": "Dejate Reventar",
+    "file": "sounds/dejate-reventar.mp3",
+    "category": "meme"
   }
 ]
