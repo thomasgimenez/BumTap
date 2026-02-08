@@ -7,25 +7,25 @@
   },
   {
     "id": "vine-boom",
-    "label": "Vine Boom",
+    "label": "Boom",
     "file": "sounds/vine-boom.mp3",
     "category": "sfx"
   },
   {
     "id": "oof",
-    "label": "Oof",
+    "label": "Ouh",
     "file": "sounds/oof.mp3",
     "category": "meme"
   },
   {
     "id": "rimshot",
-    "label": "Rimshot",
+    "label": "Chiste",
     "file": "sounds/rimshot.mp3",
     "category": "sfx"
   },
   {
     "id": "sad-trombone",
-    "label": "Sad Trombone",
+    "label": "Trompeta",
     "file": "sounds/sad-trombone.mp3",
     "category": "sfx"
   },
@@ -49,7 +49,7 @@
   },
   {
     "id": "metal-pipe",
-    "label": "Metal Pipe",
+    "label": "Tubo",
     "file": "sounds/metal-pipe.mp3",
     "category": "sfx"
   },
@@ -61,7 +61,7 @@
   },
   {
     "id": "airhorn",
-    "label": "Airhorn",
+    "label": "Bocina",
     "file": "sounds/airhorn.mp3",
     "category": "sfx"
   },

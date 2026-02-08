@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bumtap-v2';
+const CACHE_NAME = 'bumtap-v3';
 
 const STATIC_ASSETS = [
   './',

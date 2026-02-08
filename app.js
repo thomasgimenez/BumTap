@@ -4,18 +4,92 @@ let currentAudio = null;
 let currentBtnEl = null;
 let activeFilter = 'all';
 let searchQuery = '';
+let favorites = [];
+let customCategories = [];
+let longPressTriggered = false;
 
 // === Elementos del DOM ===
 const grid = document.getElementById('grid');
 const searchInput = document.getElementById('search');
-const filterBtns = document.querySelectorAll('.filter-btn');
+
+// === Datos: Favoritos ===
+function getFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem('favorites')) || [];
+  } catch { return []; }
+}
+
+function saveFavorites() {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+function toggleFavorite(soundId) {
+  const idx = favorites.indexOf(soundId);
+  if (idx === -1) {
+    favorites.push(soundId);
+  } else {
+    favorites.splice(idx, 1);
+  }
+  saveFavorites();
+}
+
+function isFavorite(soundId) {
+  return favorites.includes(soundId);
+}
+
+// === Datos: Categorías personalizadas ===
+function getCustomCategories() {
+  try {
+    return JSON.parse(localStorage.getItem('customCategories')) || [];
+  } catch { return []; }
+}
+
+function saveCustomCategories() {
+  localStorage.setItem('customCategories', JSON.stringify(customCategories));
+}
+
+function createCategory(name) {
+  const cat = {
+    id: 'cat_' + Date.now(),
+    name: name.trim(),
+    soundIds: []
+  };
+  customCategories.push(cat);
+  saveCustomCategories();
+  return cat;
+}
+
+function deleteCategory(catId) {
+  customCategories = customCategories.filter((c) => c.id !== catId);
+  saveCustomCategories();
+  if (activeFilter === catId) {
+    activeFilter = 'all';
+  }
+}
+
+function toggleSoundInCategory(catId, soundId) {
+  const cat = customCategories.find((c) => c.id === catId);
+  if (!cat) return;
+  const idx = cat.soundIds.indexOf(soundId);
+  if (idx === -1) {
+    cat.soundIds.push(soundId);
+  } else {
+    cat.soundIds.splice(idx, 1);
+  }
+  saveCustomCategories();
+}
 
 // === Inicialización ===
 async function init() {
+  favorites = getFavorites();
+  customCategories = getCustomCategories();
+
   try {
     const res = await fetch('sounds.json');
     sounds = await res.json();
+    sounds.sort((a, b) => a.label.localeCompare(b.label, 'es'));
     render();
+    renderFilterPopup();
     preloadAudio();
   } catch (err) {
     console.error('Error cargando sounds.json:', err);
@@ -73,7 +147,17 @@ function playSound(sound, btnEl) {
 // === Filtrado ===
 function getFilteredSounds() {
   return sounds.filter((s) => {
-    const matchesCategory = activeFilter === 'all' || s.category === activeFilter;
+    let matchesCategory;
+    if (activeFilter === 'all') {
+      matchesCategory = true;
+    } else if (activeFilter === 'favorites') {
+      matchesCategory = isFavorite(s.id);
+    } else if (activeFilter.startsWith('cat_')) {
+      const cat = customCategories.find((c) => c.id === activeFilter);
+      matchesCategory = cat ? cat.soundIds.includes(s.id) : false;
+    } else {
+      matchesCategory = s.category === activeFilter;
+    }
     const matchesSearch = s.label.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -85,7 +169,10 @@ function render() {
   grid.innerHTML = '';
 
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state">No se encontraron sonidos</div>';
+    let msg = 'No se encontraron sonidos';
+    if (activeFilter === 'favorites') msg = 'No tenés favoritos todavía';
+    else if (activeFilter.startsWith('cat_')) msg = 'Esta categoría está vacía';
+    grid.innerHTML = '<div class="empty-state">' + msg + '</div>';
     return;
   }
 
@@ -94,13 +181,214 @@ function render() {
   filtered.forEach((sound, i) => {
     const btn = document.createElement('button');
     btn.className = 'sound-btn';
-    btn.textContent = sound.label;
     btn.dataset.initial = sound.label.replace(/[^\w]/g, '').charAt(0);
     btn.style.setProperty('--initial-color', gruvColors[i % gruvColors.length]);
-    btn.addEventListener('click', () => playSound(sound, btn));
+
+    // Texto del label
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'sound-label';
+    labelSpan.textContent = sound.label;
+    btn.appendChild(labelSpan);
+
+    // Estrella de favorito
+    if (isFavorite(sound.id)) {
+      const star = document.createElement('span');
+      star.className = 'fav-star';
+      star.textContent = '\u2605';
+      btn.appendChild(star);
+    }
+
+    // Click para reproducir
+    btn.addEventListener('click', () => {
+      if (longPressTriggered) return;
+      playSound(sound, btn);
+    });
+
+    // Long-press para bottom sheet
+    let pressTimer = null;
+    const startPress = (e) => {
+      longPressTriggered = false;
+      pressTimer = setTimeout(() => {
+        longPressTriggered = true;
+        openBottomSheet(sound);
+      }, 500);
+    };
+    const cancelPress = () => {
+      clearTimeout(pressTimer);
+    };
+
+    btn.addEventListener('pointerdown', startPress);
+    btn.addEventListener('pointerup', cancelPress);
+    btn.addEventListener('pointerleave', cancelPress);
+    btn.addEventListener('contextmenu', (e) => e.preventDefault());
+
     grid.appendChild(btn);
   });
 }
+
+// === Popup de Filtros (dinámico) ===
+function renderFilterPopup() {
+  const popup = filterPopup;
+  popup.innerHTML = '';
+
+  // Filtros fijos
+  const fixed = [
+    { filter: 'all', label: 'Todos' },
+    { filter: 'meme', label: 'Memes' },
+    { filter: 'sfx', label: 'SFX' },
+    { filter: 'favorites', label: '\u2605 Favoritos' }
+  ];
+
+  fixed.forEach(({ filter, label }) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (activeFilter === filter ? ' active' : '');
+    btn.textContent = label;
+    btn.addEventListener('click', () => setFilter(filter));
+    popup.appendChild(btn);
+  });
+
+  // Separador y categorías custom (si hay)
+  if (customCategories.length > 0) {
+    const divider = document.createElement('div');
+    divider.className = 'filter-divider';
+    popup.appendChild(divider);
+
+    customCategories.forEach((cat) => {
+      const item = document.createElement('div');
+      item.className = 'filter-cat-item';
+
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (activeFilter === cat.id ? ' active' : '');
+      btn.textContent = cat.name;
+      btn.addEventListener('click', () => setFilter(cat.id));
+      item.appendChild(btn);
+
+      const del = document.createElement('button');
+      del.className = 'filter-cat-delete';
+      del.textContent = '\u00D7';
+      del.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (confirm('Eliminar categoría "' + cat.name + '"?')) {
+          deleteCategory(cat.id);
+          renderFilterPopup();
+          render();
+        }
+      });
+      item.appendChild(del);
+
+      popup.appendChild(item);
+    });
+  }
+
+  // Separador + botón nueva categoría
+  const divider2 = document.createElement('div');
+  divider2.className = 'filter-divider';
+  popup.appendChild(divider2);
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'filter-add-cat';
+  addBtn.textContent = '+ Nueva categoría';
+  addBtn.addEventListener('click', () => {
+    const name = prompt('Nombre de la categoría:');
+    if (name && name.trim()) {
+      createCategory(name);
+      renderFilterPopup();
+    }
+  });
+  popup.appendChild(addBtn);
+}
+
+function setFilter(filter) {
+  activeFilter = filter;
+  render();
+  renderFilterPopup();
+  filterPopup.hidden = true;
+  filterToggle.classList.remove('active');
+}
+
+// === Bottom Sheet ===
+const bsOverlay = document.getElementById('bs-overlay');
+const bottomSheet = document.getElementById('bottom-sheet');
+const bsContent = document.getElementById('bs-content');
+
+function openBottomSheet(sound) {
+  renderBottomSheet(sound);
+  bsOverlay.hidden = false;
+  bottomSheet.hidden = false;
+  // Forzar reflow para que la transición funcione
+  bottomSheet.offsetHeight;
+}
+
+function closeBottomSheet() {
+  bsOverlay.hidden = true;
+  bottomSheet.hidden = true;
+}
+
+function renderBottomSheet(sound) {
+  bsContent.innerHTML = '';
+
+  const title = document.createElement('div');
+  title.className = 'bs-title';
+  title.textContent = sound.label;
+  bsContent.appendChild(title);
+
+  // Toggle favorito
+  const favItem = document.createElement('div');
+  favItem.className = 'bs-item';
+  const favCheck = document.createElement('div');
+  favCheck.className = 'bs-check' + (isFavorite(sound.id) ? ' checked' : '');
+  favCheck.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const favLabel = document.createElement('div');
+  favLabel.className = 'bs-label';
+  favLabel.textContent = '\u2605 Favorito';
+  favItem.appendChild(favCheck);
+  favItem.appendChild(favLabel);
+  favItem.addEventListener('click', () => {
+    toggleFavorite(sound.id);
+    renderBottomSheet(sound);
+    render();
+  });
+  bsContent.appendChild(favItem);
+
+  // Categorías personalizadas
+  customCategories.forEach((cat) => {
+    const item = document.createElement('div');
+    item.className = 'bs-item';
+    const check = document.createElement('div');
+    const isIn = cat.soundIds.includes(sound.id);
+    check.className = 'bs-check' + (isIn ? ' checked' : '');
+    check.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    const label = document.createElement('div');
+    label.className = 'bs-label';
+    label.textContent = cat.name;
+    item.appendChild(check);
+    item.appendChild(label);
+    item.addEventListener('click', () => {
+      toggleSoundInCategory(cat.id, sound.id);
+      renderBottomSheet(sound);
+      render();
+    });
+    bsContent.appendChild(item);
+  });
+
+  // Botón nueva categoría
+  const addBtn = document.createElement('button');
+  addBtn.className = 'bs-add-cat';
+  addBtn.textContent = '+ Nueva categoría';
+  addBtn.addEventListener('click', () => {
+    const name = prompt('Nombre de la categoría:');
+    if (name && name.trim()) {
+      const cat = createCategory(name);
+      toggleSoundInCategory(cat.id, sound.id);
+      renderBottomSheet(sound);
+      renderFilterPopup();
+      render();
+    }
+  });
+  bsContent.appendChild(addBtn);
+}
+
+bsOverlay.addEventListener('click', closeBottomSheet);
 
 // === Event Listeners ===
 searchInput.addEventListener('input', (e) => {
@@ -116,6 +404,7 @@ filterToggle.addEventListener('click', (e) => {
   const isOpen = !filterPopup.hidden;
   filterPopup.hidden = isOpen;
   filterToggle.classList.toggle('active', !isOpen);
+  if (!isOpen) renderFilterPopup();
 });
 
 document.addEventListener('click', (e) => {
@@ -123,17 +412,6 @@ document.addEventListener('click', (e) => {
     filterPopup.hidden = true;
     filterToggle.classList.remove('active');
   }
-});
-
-filterBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach((b) => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    render();
-    filterPopup.hidden = true;
-    filterToggle.classList.remove('active');
-  });
 });
 
 // === Layout ===
