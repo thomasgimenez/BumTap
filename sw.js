@@ -1,12 +1,12 @@
-const CACHE_NAME = 'botonera-v1';
+const CACHE_NAME = 'bumtap-v2';
 
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/sounds.json',
-  '/manifest.json',
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './sounds.json',
+  './manifest.json',
 ];
 
 // Instalar: cachear assets estáticos
