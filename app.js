@@ -168,7 +168,7 @@ const themeColors = { light: '#F5F1EB', dark: '#1C1B19' };
 function getPreferredTheme() {
   const saved = localStorage.getItem('theme');
   if (saved) return saved;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'light';
 }
 
 function applyTheme(theme) {
