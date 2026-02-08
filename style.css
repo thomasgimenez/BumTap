@@ -213,7 +213,7 @@ html, body {
   border: none;
   outline: none;
   color: var(--text);
-  font-size: 0.9rem;
+  font-size: 16px;
 }
 
 .search-bar input::placeholder {
