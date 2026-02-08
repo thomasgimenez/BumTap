@@ -535,6 +535,47 @@ html, body {
   width: 100%;
 }
 
+/* === Tip banner === */
+.tip-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 12px 0;
+  padding: 10px 12px;
+  background: color-mix(in srgb, #fb4934 10%, var(--bg-raised));
+  border: 1px solid color-mix(in srgb, #fb4934 25%, var(--border));
+  border-radius: var(--radius);
+  font-size: 0.78rem;
+  color: #fb4934;
+  line-height: 1.35;
+}
+
+.tip-banner[hidden] {
+  display: none;
+}
+
+.tip-close {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #fb4934;
+  font-size: 1rem;
+  line-height: 1;
+  padding-bottom: 1px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.tip-close:active {
+  background: var(--bg-pressed);
+}
+
 /* === Estado vacío === */
 .empty-state {
   grid-column: 1 / -1;

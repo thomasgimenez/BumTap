@@ -462,9 +462,31 @@ themeToggle.addEventListener('click', () => {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 });
 
+// === Tip banner ===
+const tipBanner = document.getElementById('tip-banner');
+const tipClose = document.getElementById('tip-close');
+
+if (!localStorage.getItem('tipDismissed')) {
+  tipBanner.hidden = false;
+}
+
+tipClose.addEventListener('click', () => {
+  tipBanner.hidden = true;
+  localStorage.setItem('tipDismissed', '1');
+});
+
 // === Service Worker ===
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch((err) => {
+  navigator.serviceWorker.register('sw.js').then((reg) => {
+    reg.addEventListener('updatefound', () => {
+      const newSW = reg.installing;
+      newSW.addEventListener('statechange', () => {
+        if (newSW.state === 'activated') {
+          window.location.reload();
+        }
+      });
+    });
+  }).catch((err) => {
     console.warn('SW registro falló:', err);
   });
 }
