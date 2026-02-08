@@ -77,17 +77,17 @@ html, body {
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid color-mix(in srgb, #fabd2f 25%, var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: color-mix(in srgb, #fabd2f 10%, var(--bg-raised));
-  color: #fabd2f;
+  background: var(--bg-raised);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.12s ease;
   flex-shrink: 0;
 }
 
 .theme-toggle:active {
-  background: color-mix(in srgb, #fabd2f 20%, var(--bg-pressed));
+  background: var(--bg-pressed);
 }
 
 .theme-toggle .icon-sun,
@@ -115,8 +115,8 @@ html, body {
   flex: 1;
   display: flex;
   align-items: center;
-  background: color-mix(in srgb, #fb4934 8%, var(--bg-raised));
-  border: 1px solid color-mix(in srgb, #fb4934 20%, var(--border));
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 8px 12px;
   gap: 8px;
@@ -130,16 +130,16 @@ html, body {
   justify-content: center;
   width: 40px;
   flex-shrink: 0;
-  border: 1px solid color-mix(in srgb, #8ec07c 25%, var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: color-mix(in srgb, #8ec07c 10%, var(--bg-raised));
-  color: #8ec07c;
+  background: var(--bg-raised);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.12s ease;
 }
 
 .layout-toggle:active {
-  background: color-mix(in srgb, #8ec07c 20%, var(--bg-pressed));
+  background: var(--bg-pressed);
 }
 
 .icon-layout {
@@ -161,22 +161,21 @@ html, body {
   justify-content: center;
   width: 40px;
   height: 100%;
-  border: 1px solid color-mix(in srgb, #83a598 25%, var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: color-mix(in srgb, #83a598 10%, var(--bg-raised));
-  color: #83a598;
+  background: var(--bg-raised);
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.12s ease;
 }
 
 .filter-toggle.active {
-  color: #83a598;
-  border-color: #83a598;
-  background: color-mix(in srgb, #83a598 20%, var(--bg-raised));
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .filter-toggle:active {
-  background: color-mix(in srgb, #83a598 20%, var(--bg-pressed));
+  background: var(--bg-pressed);
 }
 
 .filter-popup {
@@ -205,8 +204,7 @@ html, body {
 
 .search-bar svg {
   flex-shrink: 0;
-  color: #fb4934;
-  opacity: 0.6;
+  color: var(--text-secondary);
 }
 
 .search-bar input {
@@ -219,8 +217,7 @@ html, body {
 }
 
 .search-bar input::placeholder {
-  color: #fb4934;
-  opacity: 0.45;
+  color: var(--text-secondary);
 }
 
 /* === Filtros === */
