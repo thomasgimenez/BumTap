@@ -206,18 +206,28 @@ function render() {
 
     // Long-press para bottom sheet
     let pressTimer = null;
+    let pressStartX = 0;
+    let pressStartY = 0;
     const startPress = (e) => {
       longPressTriggered = false;
+      pressStartX = e.clientX;
+      pressStartY = e.clientY;
       pressTimer = setTimeout(() => {
         longPressTriggered = true;
         openBottomSheet(sound);
-      }, 500);
+      }, 700);
     };
     const cancelPress = () => {
       clearTimeout(pressTimer);
     };
+    const movePress = (e) => {
+      const dx = e.clientX - pressStartX;
+      const dy = e.clientY - pressStartY;
+      if (dx * dx + dy * dy > 100) cancelPress();
+    };
 
     btn.addEventListener('pointerdown', startPress);
+    btn.addEventListener('pointermove', movePress);
     btn.addEventListener('pointerup', cancelPress);
     btn.addEventListener('pointerleave', cancelPress);
     btn.addEventListener('contextmenu', (e) => e.preventDefault());
@@ -386,6 +396,48 @@ function renderBottomSheet(sound) {
     }
   });
   bsContent.appendChild(addBtn);
+
+  // Botón compartir (Web Share API)
+  if (navigator.canShare) {
+    const shareItem = document.createElement('div');
+    shareItem.className = 'bs-item bs-share-item';
+    const shareIcon = document.createElement('div');
+    shareIcon.className = 'bs-share-icon';
+    shareIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+    const shareLabel = document.createElement('div');
+    shareLabel.className = 'bs-label';
+    shareLabel.textContent = 'Compartir audio';
+    shareItem.appendChild(shareIcon);
+    shareItem.appendChild(shareLabel);
+    shareItem.addEventListener('click', () => shareSound(sound));
+    bsContent.appendChild(shareItem);
+  }
+}
+
+// === Compartir sonido ===
+async function shareSound(sound) {
+  try {
+    const res = await fetch(sound.file);
+    const blob = await res.blob();
+    const ext = sound.file.split('.').pop();
+    const file = new File([blob], sound.label + '.' + ext, { type: blob.type });
+
+    if (navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        title: sound.label,
+        files: [file]
+      });
+    } else {
+      alert('Tu navegador no soporta compartir archivos de audio.');
+    }
+  } catch (err) {
+    // AbortError = usuario canceló el share sheet, no es un error real
+    if (err.name !== 'AbortError') {
+      console.error('Error al compartir:', err);
+      alert('No se pudo compartir el audio.');
+    }
+  }
+  closeBottomSheet();
 }
 
 bsOverlay.addEventListener('click', closeBottomSheet);

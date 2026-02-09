@@ -362,6 +362,7 @@ html, body {
   top: auto;
   right: auto;
   margin-left: auto;
+  margin-right: 32px;
   font-size: 0.85rem;
 }
 
@@ -533,6 +534,28 @@ html, body {
   font-size: 0.9rem;
   font-weight: 500;
   width: 100%;
+}
+
+.bs-share-item {
+  border-bottom: none;
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.bs-share-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.bs-share-item .bs-label {
+  color: var(--accent);
+  font-weight: 500;
 }
 
 /* === Tip banner === */
