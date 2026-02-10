@@ -172,5 +172,65 @@
     "label": "Dejate Reventar",
     "file": "sounds/dejate-reventar.mp3",
     "category": "meme"
+  },
+  {
+    "id": "paga-la-prata",
+    "label": "Paga La Prata",
+    "file": "sounds/paga-la-prata.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "que-habilidad",
+    "label": "Habilidade",
+    "file": "sounds/que-habilidad.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "un-siri",
+    "label": "Um Siri",
+    "file": "sounds/un-siri.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "eia",
+    "label": "Eia",
+    "file": "sounds/eia.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "washi-say",
+    "label": "Washi Say",
+    "file": "sounds/washi-say.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "oh-damn",
+    "label": "Oh Daamn",
+    "file": "sounds/oh-damn.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "you-got-cheese",
+    "label": "You Got Cheese",
+    "file": "sounds/you-got-cheese.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "casa-delma",
+    "label": "Casa Delma",
+    "file": "sounds/casa-delma.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "me-atore-pan",
+    "label": "Me Atore Pan",
+    "file": "sounds/me-atore-pan.mp3",
+    "category": "meme"
+  },
+  {
+    "id": "god-damn",
+    "label": "God Damn",
+    "file": "sounds/god-damn.mp3",
+    "category": "meme"
   }
 ]

@@ -8,6 +8,25 @@ let favorites = [];
 let customCategories = [];
 let longPressTriggered = false;
 
+// === Versión y changelog ===
+const APP_VERSION = '4.3';
+const CHANGELOG = {
+  '4.3': {
+    title: 'Novedades',
+    date: 'Febrero 2026',
+    sections: [
+      {
+        heading: 'Nuevos sonidos',
+        items: ['Atiendo Boludos', 'Nooo Seasma', 'Ponele Voluntad', 'Dejate Reventar', 'Paga La Prata', 'Habilidade', 'Um Siri', 'Eia', 'Washi Say', 'Oh Daamn', 'You Got Cheese', 'Casa Delma', 'Me Atore Pan', 'God Damn']
+      },
+      {
+        heading: 'Mejoras',
+        items: ['Compartir audio con otras apps', 'Mejor detección de long-press']
+      }
+    ]
+  }
+};
+
 // === Elementos del DOM ===
 const grid = document.getElementById('grid');
 const searchInput = document.getElementById('search');
@@ -91,6 +110,7 @@ async function init() {
     render();
     renderFilterPopup();
     preloadAudio();
+    checkWhatsNew();
   } catch (err) {
     console.error('Error cargando sounds.json:', err);
     grid.innerHTML = '<div class="empty-state">Error cargando sonidos</div>';
@@ -441,6 +461,97 @@ async function shareSound(sound) {
 }
 
 bsOverlay.addEventListener('click', closeBottomSheet);
+
+// === Modal "Novedades" (What's New) ===
+function checkWhatsNew() {
+  const lastSeen = localStorage.getItem('lastSeenVersion');
+  if (lastSeen === null) {
+    // Primera visita: guardar versión sin mostrar modal
+    localStorage.setItem('lastSeenVersion', APP_VERSION);
+    return;
+  }
+  if (lastSeen !== APP_VERSION && CHANGELOG[APP_VERSION]) {
+    showWhatsNewModal(CHANGELOG[APP_VERSION]);
+  }
+}
+
+function showWhatsNewModal(entry) {
+  // Overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'wn-overlay';
+  overlay.addEventListener('click', dismissWhatsNew);
+
+  // Card
+  const card = document.createElement('div');
+  card.className = 'wn-card';
+  card.addEventListener('click', (e) => e.stopPropagation());
+
+  // Título con letras de colores
+  const titleColors = ['#fb4934', '#b8bb26', '#fabd2f', '#fe8019', '#d3869b', '#8ec07c', '#83a598'];
+  const title = document.createElement('h2');
+  title.className = 'wn-title';
+  entry.title.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.style.color = titleColors[i % titleColors.length];
+    title.appendChild(span);
+  });
+  card.appendChild(title);
+
+  // Fecha
+  const date = document.createElement('div');
+  date.className = 'wn-date';
+  date.textContent = entry.date;
+  card.appendChild(date);
+
+  // Secciones
+  entry.sections.forEach((section) => {
+    const divider = document.createElement('div');
+    divider.className = 'wn-divider';
+    card.appendChild(divider);
+
+    const heading = document.createElement('h3');
+    heading.className = 'wn-heading';
+    heading.textContent = section.heading;
+    card.appendChild(heading);
+
+    const list = document.createElement('ul');
+    list.className = 'wn-list';
+    section.items.forEach((item) => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+    card.appendChild(list);
+  });
+
+  // Botón
+  const btn = document.createElement('button');
+  btn.className = 'wn-btn';
+  btn.textContent = 'Entendido';
+  btn.addEventListener('click', dismissWhatsNew);
+  card.appendChild(btn);
+
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+
+  // Animar entrada
+  requestAnimationFrame(() => {
+    overlay.classList.add('active');
+  });
+}
+
+function dismissWhatsNew() {
+  localStorage.setItem('lastSeenVersion', APP_VERSION);
+  const overlay = document.querySelector('.wn-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('active');
+  overlay.addEventListener('transitionend', () => {
+    overlay.remove();
+    document.body.style.overflow = '';
+  }, { once: true });
+}
 
 // === Event Listeners ===
 searchInput.addEventListener('input', (e) => {

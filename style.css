@@ -599,6 +599,116 @@ html, body {
   background: var(--bg-pressed);
 }
 
+/* === Modal "Novedades" (Kindle style) === */
+.wn-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  padding: 24px;
+}
+
+.wn-overlay.active {
+  opacity: 1;
+}
+
+.wn-card {
+  background: var(--bg);
+  border-radius: 14px;
+  border: 2px solid var(--accent);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  max-width: 340px;
+  width: 100%;
+  padding: 28px 24px 20px;
+  transform: scale(0.95);
+  transition: transform 0.25s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.wn-overlay.active .wn-card {
+  transform: scale(1);
+}
+
+.wn-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.wn-date {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.wn-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 14px -24px;
+}
+
+.wn-heading {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.wn-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px;
+}
+
+.wn-list li {
+  position: relative;
+  padding-left: 16px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.wn-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.wn-btn {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.12s ease;
+}
+
+.wn-btn:active {
+  opacity: 0.8;
+}
+
 /* === Estado vacío === */
 .empty-state {
   grid-column: 1 / -1;
