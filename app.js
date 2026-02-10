@@ -9,19 +9,19 @@ let customCategories = [];
 let longPressTriggered = false;
 
 // === Versión y changelog ===
-const APP_VERSION = '4.3';
+const APP_VERSION = '4.4';
 const CHANGELOG = {
-  '4.3': {
+  '4.4': {
     title: 'Novedades',
     date: 'Febrero 2026',
     sections: [
       {
-        heading: 'Nuevos sonidos',
-        items: ['Atiendo Boludos', 'Nooo Seasma', 'Ponele Voluntad', 'Dejate Reventar', 'Paga La Prata', 'Habilidade', 'Um Siri', 'Eia', 'Washi Say', 'Oh Daamn', 'You Got Cheese', 'Casa Delma', 'Me Atore Pan', 'God Damn']
-      },
-      {
         heading: 'Mejoras',
         items: ['Compartir audio con otras apps', 'Mejor detección de long-press']
+      },
+      {
+        heading: 'Nuevos sonidos',
+        items: ['Atiendo Boludos', 'Nooo Seasma', 'Ponele Voluntad', 'Dejate Reventar', 'Paga La Prata', 'Habilidade', 'Um Siri', 'Eia', 'Washi Say', 'Oh Daamn', 'You Got Cheese', 'Casa Delma', 'Me Atore Pan', 'God Damn']
       }
     ]
   }
